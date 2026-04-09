@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useCallback, useEffect, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useSyncExternalStore, type ReactNode } from 'react'
 
 type Theme = 'light' | 'dark'
 
-const STORAGE_KEY = 'mediablog-theme'
+const STORAGE_KEY = 'ferma-pod-klyuch-theme'
 
 function getSystemTheme(): Theme {
   if (typeof window === 'undefined') return 'light'
@@ -62,6 +62,6 @@ export function useTheme() {
   return { theme, toggleTheme, setLight, setDark }
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
