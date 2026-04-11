@@ -170,11 +170,11 @@ function FloatingContactButton() {
           <Phone className="h-6 w-6" />
         </a>
         <a
-          href="https://t.me/Milk_Forever_Business"
+          href="https://max.ru/590300963613_bot"
           target="_blank"
           rel="noopener noreferrer"
           className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-110 ring-4 ring-white/20"
-          aria-label="Написать в Telegram"
+          aria-label="Написать в Max"
         >
           <MessageCircle className="h-7 w-7" />
         </a>
@@ -722,7 +722,7 @@ function CalculatorSection() {
                 {/* CTA */}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href={`https://t.me/Milk_Forever_Business?text=${tgMessage}`}
+                    href="https://max.ru/590300963613_bot"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 bg-white text-green-800 hover:bg-green-50 font-semibold h-12 rounded-lg transition-colors px-6"

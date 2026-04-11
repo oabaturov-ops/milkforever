@@ -111,12 +111,12 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold">Мы в соцсетях</h3>
             <a
-              href="https://t.me/Milk_Forever_Business"
+              href="https://max.ru/590300963613_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
             >
-              ✈️ Telegram
+              ✈️ Max
             </a>
 
             <h3 className="font-semibold pt-2">Подписка на новости</h3>

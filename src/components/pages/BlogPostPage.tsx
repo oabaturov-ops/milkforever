@@ -260,12 +260,12 @@ export default function BlogPostPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href="https://t.me/Milk_Forever_Business"
+                  href="https://max.ru/590300963613_bot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold h-11 rounded-lg transition-colors px-6"
                 >
-                  Написать в Telegram
+                  Написать в Max
                 </a>
                 <a
                   href="tel:+79026489672"

@@ -51,9 +51,9 @@ const contactInfo = [
   },
   {
     icon: <MessageCircle className="h-5 w-5" />,
-    label: 'Telegram',
+    label: 'Max',
     value: '@Milk_Forever_Business',
-    href: 'https://t.me/Milk_Forever_Business',
+    href: 'https://max.ru/590300963613_bot',
   },
   {
     icon: <MapPin className="h-5 w-5" />,
@@ -196,13 +196,13 @@ export default function ContactsPage() {
                   Позвонить
                 </a>
                 <a
-                  href="https://t.me/Milk_Forever_Business"
+                  href="https://max.ru/590300963613_bot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 border-2 border-green-300 text-green-700 hover:bg-green-50 dark:text-green-400 dark:border-green-700 dark:hover:bg-green-950 font-semibold h-12 rounded-lg transition-colors px-6"
                 >
                   <MessageCircle className="h-5 w-5" />
-                  Telegram
+                  Max
                 </a>
               </div>
             </motion.div>

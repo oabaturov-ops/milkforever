@@ -252,12 +252,12 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://t.me/Milk_Forever_Business"
+                href="https://max.ru/590300963613_bot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold h-12 rounded-lg px-8 transition-colors"
               >
-                Написать в Telegram
+                Написать в Max
                 <ArrowRight className="h-4 w-4" />
               </a>
               <Button

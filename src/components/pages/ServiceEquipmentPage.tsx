@@ -244,16 +244,16 @@ export default function ServiceEquipmentPage() {
           >
             <Card className="inline-block bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/40 dark:to-emerald-950/40 border-green-200 dark:border-green-900 p-6">
               <p className="text-base mb-4 font-medium">
-                Запишитесь на промывку вакуумной линии через нашего Telegram-бота
+                Запишитесь на промывку вакуумной линии через нашего Max-бота
               </p>
               <a
-                href="https://t.me/Milk_Forever_Business"
+                href="https://max.ru/590300963613_bot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold h-11 rounded-lg px-6 transition-colors"
               >
                 <MessageCircle className="h-5 w-5" />
-                Написать в Telegram
+                Написать в Max
               </a>
             </Card>
           </motion.div>
@@ -414,7 +414,7 @@ export default function ServiceEquipmentPage() {
 
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a
-                      href="https://t.me/Milk_Forever_Business"
+                      href="https://max.ru/590300963613_bot"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold h-12 rounded-lg transition-colors"
