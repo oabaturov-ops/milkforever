@@ -4,12 +4,12 @@ import { NextResponse } from 'next/server'
 export async function GET() {
   try {
     const categories = await db.category.findMany({
-      orderBy: { name: 'asc' },
       include: {
         _count: {
           select: { posts: { where: { published: true } } },
         },
       },
+      orderBy: { name: 'asc' },
     })
     return NextResponse.json(categories)
   } catch {

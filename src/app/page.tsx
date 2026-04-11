@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Card, CardContent, CardDescription, CardHeader, CardTitle,
@@ -12,8 +12,16 @@ import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 import {
-  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2,
+  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, MessageCircle, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3,
 } from 'lucide-react'
+import { useNavigation } from '@/lib/navigation'
+import AboutPage from '@/components/pages/AboutPage'
+import ServicesPage from '@/components/pages/ServicesPage'
+import ServiceEquipmentPage from '@/components/pages/ServiceEquipmentPage'
+import SubsidiesPage from '@/components/pages/SubsidiesPage'
+import ContactsPage from '@/components/pages/ContactsPage'
+import BlogPostPage from '@/components/pages/BlogPostPage'
+import BlogListPage from '@/components/pages/BlogListPage'
 
 // ==================== ТИПЫ ====================
 interface Category {
@@ -37,32 +45,32 @@ interface Post {
 // ==================== ДАННЫЕ УСЛУГ ====================
 const services = [
   {
-    icon: '🏗️',
+    icon: <PenTool className="h-7 w-7" />,
     title: 'Проектирование',
     description: 'Проектирование молочных ферм с учётом всех норм и требований. Индивидуальный подход к каждому проекту.',
   },
   {
-    icon: '🔨',
+    icon: <Hammer className="h-7 w-7" />,
     title: 'Строительство',
     description: 'Строительство ферм под ключ под ваш проект. Полный цикл работ от фундамента до запуска.',
   },
   {
-    icon: '⚙️',
+    icon: <Settings className="h-7 w-7" />,
     title: 'Оборудование',
     description: 'Подбор и поставка оборудования от ведущих производителей. Доильные залы, системы охлаждения, кормоприготовление.',
   },
   {
-    icon: '🔧',
+    icon: <Wrench className="h-7 w-7" />,
     title: 'Сервис',
     description: 'Сервисное обслуживание и ремонт оборудования. Оперативный выезд специалистов на объект.',
   },
   {
-    icon: '💰',
+    icon: <Coins className="h-7 w-7" />,
     title: 'Субсидии',
     description: 'Помощь в получении государственных субсидий и грантов на строительство и модернизацию ферм.',
   },
   {
-    icon: '📋',
+    icon: <ClipboardList className="h-7 w-7" />,
     title: 'Сопровождение',
     description: 'Полное сопровождение проекта на всех этапах — от идеи до запуска и выхода на полную мощность.',
   },
@@ -103,13 +111,14 @@ const staggerContainer = {
 }
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
-export default function HomePage() {
+function HomePage() {
   return (
     <>
       <HeroSection />
       <ServicesSection />
       <WhyUsSection />
       <StatsSection />
+      <CalculatorSection />
       <BlogPreviewSection />
       <CTASection />
       <ContactInfoBar />
@@ -117,20 +126,224 @@ export default function HomePage() {
   )
 }
 
+// ==================== ПЛАВАЮЩАЯ КНОПКА СВЯЗИ ====================
+function FloatingContactButton() {
+  const [showTooltip, setShowTooltip] = useState(false)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 2000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowTooltip(false), 5000)
+    return () => clearTimeout(timer)
+  }, [showTooltip])
+
+  if (!visible) return null
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      {/* Подсказка */}
+      <AnimatePresence>
+        {showTooltip && (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-xl px-4 py-3 shadow-lg border text-sm max-w-[220px]"
+          >
+            Есть вопросы? Напишите нам!
+            <div className="absolute right-0 bottom-4 translate-x-1 rotate-45 w-3 h-3 bg-white dark:bg-gray-800 border-r border-b" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Кнопки */}
+      <div className="flex flex-col gap-3 items-center">
+        <a
+          href="tel:+79026489672"
+          className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
+          aria-label="Позвонить"
+        >
+          <Phone className="h-6 w-6" />
+        </a>
+        <a
+          href="https://t.me/Milk_Forever_Business"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-110 ring-4 ring-white/20"
+          aria-label="Написать в Telegram"
+        >
+          <MessageCircle className="h-7 w-7" />
+        </a>
+      </div>
+    </div>
+  )
+}
+
+// ==================== ROUTER ====================
+function PageRouter() {
+  const { currentPage } = useNavigation()
+
+  useEffect(() => {
+    // If navigating to home, scroll to top; for calculator/blog, scroll to section
+    if (currentPage === 'home') {
+      window.scrollTo({ top: 0 })
+    }
+  }, [currentPage])
+
+  // Calculator and Blog redirect to home and scroll to section
+  useEffect(() => {
+    if (currentPage === 'calculator') {
+      // Small delay to allow home page to render
+      setTimeout(() => {
+        const el = document.getElementById('calculator')
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    }
+  }, [currentPage])
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {currentPage === 'home' && (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <HomePage />
+          </motion.div>
+        )}
+        {currentPage === 'about' && (
+          <motion.div
+            key="about"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AboutPage />
+          </motion.div>
+        )}
+        {currentPage === 'services' && (
+          <motion.div
+            key="services"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ServicesPage />
+          </motion.div>
+        )}
+        {currentPage === 'calculator' && (
+          <motion.div
+            key="calculator"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <HomePage />
+          </motion.div>
+        )}
+        {currentPage === 'blog' && (
+          <motion.div
+            key="blog"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <BlogListPage />
+          </motion.div>
+        )}
+        {currentPage === 'subsidies' && (
+          <motion.div
+            key="subsidies"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <SubsidiesPage />
+          </motion.div>
+        )}
+        {currentPage === 'service' && (
+          <motion.div
+            key="service"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ServiceEquipmentPage />
+          </motion.div>
+        )}
+        {currentPage === 'contacts' && (
+          <motion.div
+            key="contacts"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ContactsPage />
+          </motion.div>
+        )}
+        {currentPage === 'post' && (
+          <motion.div
+            key="post"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <BlogPostPage />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <FloatingContactButton />
+    </>
+  )
+}
+
+export default function AppPage() {
+  return (
+    <PageRouter />
+  )
+}
+
 // ==================== HERO ====================
 function HeroSection() {
+  const { navigateTo } = useNavigation()
+
   const handleScrollTo = (id: string) => {
     const el = document.querySelector(id)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 text-white">
-      {/* Декоративные элементы */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-green-400 blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-emerald-400 blur-3xl" />
-      </div>
+    <section className="relative overflow-hidden bg-green-900 text-white min-h-[85vh] flex items-center">
+      {/* Видеофон */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        poster="/hero-video-poster.jpg"
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
+
+      {/* Тёмный оверлей для читаемости текста */}
+      <div className="absolute inset-0 bg-gradient-to-b from-green-950/70 via-green-900/60 to-green-950/80" />
 
       <div className="relative container mx-auto px-4 py-20 md:py-32">
         <motion.div
@@ -139,8 +352,8 @@ function HeroSection() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <Badge className="mb-6 bg-green-700/50 text-green-100 border-green-600/30 hover:bg-green-700/70 text-sm px-4 py-1.5">
-            🌱 Строительство ферм с 2010 года
+          <Badge className="mb-6 bg-white/15 text-green-100 border-white/20 hover:bg-white/25 text-sm px-4 py-1.5 backdrop-blur-sm">
+            Строительство ферм с 2010 года
           </Badge>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
@@ -151,7 +364,7 @@ function HeroSection() {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-green-100/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-green-100/90 max-w-2xl mx-auto mb-10 leading-relaxed">
             Проектирование, строительство и сопровождение молочных ферм
             в Пермском крае и регионах. От идеи до полноценного производства.
           </p>
@@ -159,7 +372,7 @@ function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-white text-green-800 hover:bg-green-50 font-semibold text-base px-8 h-12 shadow-lg"
+              className="bg-white text-green-800 hover:bg-green-50 font-semibold text-base px-8 h-12 shadow-lg shadow-green-900/30"
               onClick={() => handleScrollTo('#cta')}
             >
               Получить консультацию
@@ -167,7 +380,7 @@ function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-green-300/50 text-green-100 hover:bg-green-800/50 font-semibold text-base px-8 h-12"
+              className="border-white/40 text-white hover:bg-white/15 backdrop-blur-sm font-semibold text-base px-8 h-12"
               onClick={() => handleScrollTo('#services')}
             >
               Наши услуги
@@ -181,6 +394,8 @@ function HeroSection() {
 
 // ==================== УСЛУГИ ====================
 function ServicesSection() {
+  const { navigateTo } = useNavigation()
+
   return (
     <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -213,7 +428,9 @@ function ServicesSection() {
             <motion.div key={service.title} custom={i} variants={fadeInUp}>
               <Card className="group h-full hover:shadow-lg hover:border-green-200 dark:hover:border-green-800 transition-all duration-300">
                 <CardHeader className="pb-3">
-                  <span className="text-4xl mb-3 block">{service.icon}</span>
+                  <div className="w-14 h-14 rounded-xl bg-green-100 dark:bg-green-900/40 flex items-center justify-center text-green-600 dark:text-green-400 mb-3">
+                    {service.icon}
+                  </div>
                   <CardTitle className="text-xl group-hover:text-primary transition-colors">
                     {service.title}
                   </CardTitle>
@@ -227,6 +444,16 @@ function ServicesSection() {
             </motion.div>
           ))}
         </motion.div>
+
+        <div className="text-center mt-10">
+          <Button
+            variant="outline"
+            className="border-green-300 text-green-700 hover:bg-green-50 dark:text-green-400 dark:border-green-700 dark:hover:bg-green-950 font-semibold"
+            onClick={() => navigateTo('services')}
+          >
+            Подробнее об услугах →
+          </Button>
+        </div>
       </div>
     </section>
   )
@@ -314,10 +541,221 @@ function StatsSection() {
   )
 }
 
+// ==================== КАЛЬКУЛЯТОР ====================
+function CalculatorSection() {
+  const [cows, setCows] = useState(200)
+  const [housingType, setHousingType] = useState<'tied' | 'box'>('tied')
+
+  // Формулы расчёта
+  const costPerHead = housingType === 'tied' ? 180000 : 260000
+  const totalCost = cows * costPerHead
+  const milkYield = housingType === 'tied' ? 22 : 30
+  const milkPrice = 34
+  const monthlyIncome = Math.round(cows * milkYield * 30.5 * milkPrice)
+  const monthlyExpense = Math.round(totalCost * 0.004)
+  const monthlyProfit = monthlyIncome - monthlyExpense
+  const subsidyPercent = 25
+  const subsidy = Math.round(totalCost * subsidyPercent / 100)
+  const netCost = totalCost - subsidy
+  const paybackMonths = Math.round(netCost / monthlyProfit)
+
+  const formatMoney = (n: number) =>
+    n.toLocaleString('ru-RU')
+
+  const tgMessage = encodeURIComponent(
+    `Здравствуйте! Хочу узнать точный расчёт:\n- Коров: ${cows} голов\n- Содержание: ${housingType === 'tied' ? 'привязное' : 'боксовое'}\n- Примерная стоимость: ${formatMoney(totalCost)} руб.`
+  )
+
+  return (
+    <section id="calculator" className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <Badge variant="outline" className="mb-4 border-green-300 text-green-700 dark:text-green-400 dark:border-green-700">
+            Калькулятор
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Рассчитайте стоимость фермы
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Покрутите ползунки и узнайте примерную стоимость, доход и срок окупаемости за 30 секунд
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto"
+        >
+          <Card className="overflow-hidden shadow-lg border-green-200 dark:border-green-900">
+            <CardContent className="p-0">
+              {/* Настройки */}
+              <div className="p-6 md:p-8 space-y-8">
+                {/* Количество коров */}
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <Label className="text-base font-semibold flex items-center gap-2">
+                      Количество коров
+                    </Label>
+                    <span className="text-2xl font-bold text-primary">{cows} голов</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={50}
+                    max={1000}
+                    step={10}
+                    value={cows}
+                    onChange={(e) => setCows(Number(e.target.value))}
+                    className="w-full h-3 rounded-full appearance-none cursor-pointer bg-gradient-to-r from-green-200 to-green-400 dark:from-green-900 dark:to-green-700 accent-green-600"
+                  />
+                  <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+                    <span>50</span>
+                    <span>1000</span>
+                  </div>
+                </div>
+
+                {/* Тип содержания */}
+                <div>
+                  <Label className="text-base font-semibold mb-4 block">
+                    Тип содержания
+                  </Label>
+                  <div className="grid grid-cols-2 gap-4">
+                    <button
+                      onClick={() => setHousingType('tied')}
+                      className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
+                        housingType === 'tied'
+                          ? 'border-green-500 bg-green-50 dark:bg-green-950/40 shadow-md'
+                          : 'border-muted hover:border-green-300'
+                      }`}
+                    >
+                      <Home className={`h-7 w-7 mx-auto mb-1 ${housingType === 'tied' ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'}`} />
+                      <div className={`font-semibold text-sm ${housingType === 'tied' ? 'text-green-700 dark:text-green-400' : ''}`}>
+                        Привязное
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        от {formatMoney(180000 * 50)} руб.
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => setHousingType('box')}
+                      className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
+                        housingType === 'box'
+                          ? 'border-green-500 bg-green-50 dark:bg-green-950/40 shadow-md'
+                          : 'border-muted hover:border-green-300'
+                      }`}
+                    >
+                      <Grid3X3 className={`h-7 w-7 mx-auto mb-1 ${housingType === 'box' ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'}`} />
+                      <div className={`font-semibold text-sm ${housingType === 'box' ? 'text-green-700 dark:text-green-400' : ''}`}>
+                        Боксовое
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        от {formatMoney(260000 * 50)} руб.
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Результаты */}
+              <div className="bg-gradient-to-br from-green-800 via-green-700 to-emerald-700 text-white p-6 md:p-8">
+                <div className="flex items-center gap-2 mb-6">
+                  <Calculator className="h-5 w-5 text-green-200" />
+                  <h3 className="font-bold text-lg">Результат расчёта</h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Banknote className="h-4 w-4 text-green-200" />
+                      <span className="text-sm text-green-100">Стоимость</span>
+                    </div>
+                    <div className="text-xl font-bold">{formatMoney(totalCost)} &#8381;</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <TrendingUp className="h-4 w-4 text-green-200" />
+                      <span className="text-sm text-green-100">Доход / мес.</span>
+                    </div>
+                    <div className="text-xl font-bold">{formatMoney(monthlyIncome)} &#8381;</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <ShieldCheck className="h-4 w-4 text-green-200" />
+                      <span className="text-sm text-green-100">Субсидия</span>
+                    </div>
+                    <div className="text-xl font-bold">{formatMoney(subsidy)} &#8381;</div>
+                    <div className="text-xs text-green-200 mt-0.5">{subsidyPercent}% от стоимости</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <ArrowRight className="h-4 w-4 text-green-200" />
+                      <span className="text-sm text-green-100">Окупаемость</span>
+                    </div>
+                    <div className="text-xl font-bold">{paybackMonths} мес.</div>
+                    <div className="text-xs text-green-200 mt-0.5">~{(paybackMonths / 12).toFixed(1)} лет</div>
+                  </div>
+                </div>
+
+                {/* Подробности */}
+                <div className="bg-white/5 rounded-lg p-4 mb-6 text-sm space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-green-200">Стоимость с учётом субсидии:</span>
+                    <span className="font-semibold">{formatMoney(netCost)} &#8381;</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-green-200">Надой на 1 корову:</span>
+                    <span className="font-semibold">{milkYield} л/день</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-green-200">Чистая прибыль / мес.:</span>
+                    <span className="font-semibold">{formatMoney(monthlyProfit)} &#8381;</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href={`https://t.me/Milk_Forever_Business?text=${tgMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 bg-white text-green-800 hover:bg-green-50 font-semibold h-12 rounded-lg transition-colors px-6"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Получить точный расчёт
+                  </a>
+                  <a
+                    href="tel:+79026489672"
+                    className="flex items-center justify-center gap-2 border-2 border-white/40 text-white hover:bg-white/15 font-semibold h-12 rounded-lg transition-colors px-6"
+                  >
+                    <Phone className="h-5 w-5" />
+                    Позвонить
+                  </a>
+                </div>
+
+                <p className="text-xs text-green-200/60 text-center mt-4">
+                  Расчёт приблизительный. Для точной стоимости свяжитесь с нами.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 // ==================== ПРЕВЬЮ БЛОГА ====================
 function BlogPreviewSection() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
+  const { navigateTo } = useNavigation()
 
   useEffect(() => {
     fetch('/api/posts?limit=3')
@@ -358,7 +796,7 @@ function BlogPreviewSection() {
               Полезные материалы о молочном животноводстве и фермерстве
             </p>
           </div>
-          <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:text-green-400 dark:border-green-700 dark:hover:bg-green-950">
+          <Button variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 dark:text-green-400 dark:border-green-700 dark:hover:bg-green-950" onClick={() => navigateTo('blog')}>
             Все статьи →
           </Button>
         </motion.div>
@@ -388,7 +826,7 @@ function BlogPreviewSection() {
               ? null
               : posts.map((post, i) => (
                   <motion.div key={post.id} custom={i} variants={fadeInUp}>
-                    <Card className="group h-full hover:shadow-lg transition-all duration-300 cursor-pointer">
+                    <Card className="group h-full hover:shadow-lg transition-all duration-300 cursor-pointer" onClick={() => navigateTo('post', post.slug)}>
                       {post.coverImage && (
                         <div className="overflow-hidden">
                           <img

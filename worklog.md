@@ -171,3 +171,53 @@ src/app/api/subscribe/route.ts       — API: подписка
 - ✅ `npx next build` — скомпилирован успешно
 - ✅ `npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts` — БД настроена, данные загружены
 - ✅ Dev-сервер работает, страница загружается (GET / 200), API отвечает (GET /api/posts?limit=3 200)
+
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix blog post links and create BlogPostPage component
+
+Work Log:
+- Added 'post' to PageName type in navigation.tsx
+- Added currentPostSlug state and slug parameter to navigateTo function
+- Created BlogPostPage component with full article view (loading skeleton, error state, markdown renderer, CTA)
+- Added onClick handlers to blog preview cards to navigate to post page
+- Added BlogPostPage route in PageRouter
+- Passed lint checks
+
+Stage Summary:
+- Blog posts are now clickable and open full article view
+- Article page shows: title, category badge, author, date, views, cover image, tags, full content, CTA with Telegram/phone
+- Markdown renderer supports H2 headings and paragraphs
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Write 5 SEO articles and add to database
+
+Work Log:
+- Wrote 5 SEO articles covering requested topics
+- Created script to add articles to Prisma/SQLite database
+- All articles tagged with relevant categories and tags
+
+Stage Summary:
+- Article 1: "Кормление телят: первые 60 дней решают всё" (Советы фермерам)
+- Article 2: "Премиксы для коров: зачем платить за витамины в мешке" (Советы фермерам)
+- Article 3: "Шроты и жмыхи в рационе коровы: как растительный белок увеличить надои" (Советы фермерам)
+- Article 4: "5 добавок, которые реально повышают надои" (Советы фермерам)
+- Article 5: "Вентиляция на молочной ферме: как свежий воздух добавляет молока" (Строительство)
+- Total articles in blog: 14
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Generate stock photos for blog articles
+
+Work Log:
+- Downloaded 14 stock photos from Unsplash for all blog articles
+- Stored in /public/blog/ directory
+- Updated all 14 posts in database with local image paths
+
+Stage Summary:
+- All 14 blog articles now have local cover images (/blog/*.jpg)
+- Images sized 1344x768 for consistent card display

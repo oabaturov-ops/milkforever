@@ -5,10 +5,12 @@ import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { useNavigation } from '@/lib/navigation'
 
 export default function Footer() {
   const [email, setEmail] = React.useState('')
   const [subscribed, setSubscribed] = React.useState(false)
+  const { navigateTo, currentPage } = useNavigation()
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,18 +28,30 @@ export default function Footer() {
     }
   }
 
+  const navItems = [
+    { label: 'Главная', page: 'home' },
+    { label: 'О компании', page: 'about' },
+    { label: 'Услуги', page: 'services' },
+    { label: 'Субсидии', page: 'subsidies' },
+    { label: 'Сервис', page: 'service' },
+    { label: 'Контакты', page: 'contacts' },
+  ]
+
   return (
     <footer className="border-t bg-muted/30 mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* О компании */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigateTo('home')}
+              className="flex items-center gap-2 transition-opacity hover:opacity-80"
+            >
               <span className="text-2xl">🐄</span>
               <span className="text-lg font-bold bg-gradient-to-r from-green-700 via-green-500 to-emerald-500 bg-clip-text text-transparent">
                 Ферма Под Ключ
               </span>
-            </div>
+            </button>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Профессиональное проектирование, строительство и сопровождение молочных ферм
               в Пермском крае и регионах. Более 15 лет успешного опыта.
@@ -48,21 +62,19 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold">Навигация</h3>
             <nav className="flex flex-col gap-2">
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Главная
-              </a>
-              <a href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                О компании
-              </a>
-              <a href="#services" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Услуги
-              </a>
-              <a href="#blog" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Блог
-              </a>
-              <a href="#contacts" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Контакты
-              </a>
+              {navItems.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => navigateTo(item.page)}
+                  className={`text-sm text-left transition-colors ${
+                    currentPage === item.page
+                      ? 'text-primary font-medium'
+                      : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
             </nav>
           </div>
 
