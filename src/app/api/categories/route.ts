@@ -1,15 +1,11 @@
-import { db } from '@/lib/db'
+import { getAllCategories, getPostsByPage } from '@/lib/blog-data'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const categories = await db.category.findMany({
-      include: {
-        _count: {
-          select: { posts: { where: { published: true } } },
-        },
-      },
-      orderBy: { name: 'asc' },
+    const categories = getAllCategories().map(cat => {
+      const { total } = getPostsByPage({ categorySlug: cat.slug, perPage: 999 })
+      return { ...cat, _count: { posts: total } }
     })
     return NextResponse.json(categories)
   } catch {
