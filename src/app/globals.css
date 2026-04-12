@@ -120,3 +120,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Critical: ensure all static assets always show */
+img, video {
+  visibility: visible !important;
+}
