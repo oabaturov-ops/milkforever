@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Card, CardContent, CardDescription, CardHeader, CardTitle,
@@ -15,13 +16,15 @@ import {
   Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, MessageCircle, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3,
 } from 'lucide-react'
 import { useNavigation } from '@/lib/navigation'
-import AboutPage from '@/components/pages/AboutPage'
-import ServicesPage from '@/components/pages/ServicesPage'
-import ServiceEquipmentPage from '@/components/pages/ServiceEquipmentPage'
-import SubsidiesPage from '@/components/pages/SubsidiesPage'
-import ContactsPage from '@/components/pages/ContactsPage'
-import BlogPostPage from '@/components/pages/BlogPostPage'
-import BlogListPage from '@/components/pages/BlogListPage'
+
+// Dynamic imports для подстраниц — уменьшают начальный бандл
+const AboutPage = dynamic(() => import('@/components/pages/AboutPage'), { ssr: false })
+const ServicesPage = dynamic(() => import('@/components/pages/ServicesPage'), { ssr: false })
+const ServiceEquipmentPage = dynamic(() => import('@/components/pages/ServiceEquipmentPage'), { ssr: false })
+const SubsidiesPage = dynamic(() => import('@/components/pages/SubsidiesPage'), { ssr: false })
+const ContactsPage = dynamic(() => import('@/components/pages/ContactsPage'), { ssr: false })
+const BlogPostPage = dynamic(() => import('@/components/pages/BlogPostPage'), { ssr: false })
+const BlogListPage = dynamic(() => import('@/components/pages/BlogListPage'), { ssr: false })
 
 // ==================== ТИПЫ ====================
 interface Category {
