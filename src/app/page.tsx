@@ -92,18 +92,16 @@ const stats = [
 
 // ==================== АНИМАЦИИ ====================
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { y: 30 },
   visible: (i: number) => ({
-    opacity: 1,
     y: 0,
     transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' as const },
   }),
 }
 
 const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: { staggerChildren: 0.1 },
   },
 }
@@ -209,7 +207,7 @@ function PageRouter() {
         {currentPage === 'home' && (
           <motion.div
             key="home"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -220,7 +218,7 @@ function PageRouter() {
         {currentPage === 'about' && (
           <motion.div
             key="about"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -231,7 +229,7 @@ function PageRouter() {
         {currentPage === 'services' && (
           <motion.div
             key="services"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -242,7 +240,7 @@ function PageRouter() {
         {currentPage === 'calculator' && (
           <motion.div
             key="calculator"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -253,7 +251,7 @@ function PageRouter() {
         {currentPage === 'blog' && (
           <motion.div
             key="blog"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -264,7 +262,7 @@ function PageRouter() {
         {currentPage === 'subsidies' && (
           <motion.div
             key="subsidies"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -275,7 +273,7 @@ function PageRouter() {
         {currentPage === 'service' && (
           <motion.div
             key="service"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -286,7 +284,7 @@ function PageRouter() {
         {currentPage === 'contacts' && (
           <motion.div
             key="contacts"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -297,7 +295,7 @@ function PageRouter() {
         {currentPage === 'post' && (
           <motion.div
             key="post"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
@@ -345,8 +343,8 @@ function HeroSection() {
 
       <div className="relative container mx-auto px-4 py-20 md:py-32">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 40 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center"
         >
@@ -398,8 +396,8 @@ function ServicesSection() {
     <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
@@ -463,8 +461,8 @@ function WhyUsSection() {
     <section id="about" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
@@ -568,8 +566,8 @@ function CalculatorSection() {
     <section id="calculator" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
@@ -586,8 +584,8 @@ function CalculatorSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 30 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
@@ -777,8 +775,8 @@ function BlogPreviewSection() {
     <section id="blog" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          whileInView={{ y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5 }}
           className="flex items-center justify-between mb-14 flex-wrap gap-4"
@@ -909,8 +907,8 @@ function CTASection() {
       <div className="relative container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ y: 20 }}
+            whileInView={{ y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.5 }}
             className="text-center mb-10"
@@ -924,8 +922,8 @@ function CTASection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ y: 20 }}
+            whileInView={{ y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
