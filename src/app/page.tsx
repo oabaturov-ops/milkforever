@@ -329,7 +329,14 @@ function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-green-900 text-white min-h-[85vh] flex items-center">
-      {/* Видеофон */}
+      {/* Фоновая картинка-постер (всегда видна) */}
+      <img
+        src="/hero-video-poster.jpg"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+        aria-hidden="true"
+      />
+      {/* Видеофон (поверх постера, если загрузится) */}
       <video
         autoPlay
         muted
