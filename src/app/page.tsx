@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 import {
-  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3,
+  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3, AlertTriangle,
 } from 'lucide-react'
 import { useNavigation } from '@/lib/navigation'
 
@@ -81,9 +81,9 @@ const services = [
 
 // ==================== ПРЕИМУЩЕСТВА ====================
 const advantages = [
-  { text: '15+ лет опыта', description: 'Работаем в отрасли с 2010 года' },
-  { text: 'Гарантия на работы', description: 'Предоставляем гарантию до 5 лет' },
-  { text: 'Помощь с финансированием', description: 'Субсидии, гранты, лизинг' },
+  { text: '15+ лет опыта', description: 'Работаем в отрасли с 2010 года. Реализовали проекты по всему Уралу и Зауралью.' },
+  { text: 'Гарантия на работы', description: 'Предоставляем гарантию до 5 лет на все виды выполненных работ и смонтированное оборудование.' },
+  { text: 'Помощь с финансированием', description: 'Субсидии, гранты, льготное кредитование и лизинг — поможем подобрать оптимальную программу.' },
 ]
 
 // ==================== СТАТИСТИКА ====================
@@ -125,8 +125,51 @@ function HomePage() {
   )
 }
 
+// ==================== ERROR BOUNDARY ====================
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback?: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode; fallback?: React.ReactNode }) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Card className="max-w-md mx-4 p-8 text-center">
+            <CardContent>
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <AlertTriangle className="h-8 w-8 text-red-500" />
+              </div>
+              <h3 className="text-lg font-bold mb-2">Ошибка загрузки страницы</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Произошла ошибка при загрузке. Попробуйте обновить страницу.
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => this.setState({ hasError: false, error: null })}
+              >
+                Попробовать снова
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+
 // ==================== ПЛАВАЮЩАЯ КНОПКА СВЯЗИ ====================
 function FloatingContactButton() {
+  const { navigateTo } = useNavigation()
   const [showTooltip, setShowTooltip] = useState(false)
   const [visible, setVisible] = useState(false)
 
@@ -143,7 +186,6 @@ function FloatingContactButton() {
   if (!visible) return null
 
   const tgUrl = 'https://t.me/MilkForeverServiceBot'
-  const phoneUrl = 'tel:+79026489672'
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {/* Подсказка */}
@@ -163,13 +205,13 @@ function FloatingContactButton() {
 
       {/* Кнопки */}
       <div className="flex flex-col gap-3 items-center">
-        <a
-          href={phoneUrl}
-          className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
-          aria-label="Позвонить"
+        <button
+          onClick={() => navigateTo('contacts')}
+          className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 cursor-pointer"
+          aria-label="Контакты"
         >
           <Phone className="h-6 w-6" />
-        </a>
+        </button>
         <a
           href={tgUrl}
           target="_blank"
@@ -272,7 +314,9 @@ function PageRouter() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <SubsidiesPage />
+            <ErrorBoundary>
+              <SubsidiesPage />
+            </ErrorBoundary>
           </motion.div>
         )}
         {currentPage === 'service' && (
@@ -375,6 +419,8 @@ function HeroSection() {
           <p className="text-lg md:text-xl text-green-100/90 max-w-2xl mx-auto mb-10 leading-relaxed">
             Проектирование, строительство и сопровождение молочных ферм
             в Пермском крае и регионах. От идеи до полноценного производства.
+            Подбираем оптимальное оборудование, помогаем получить субсидии
+            и обеспечиваем запуск фермы в установленные сроки.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

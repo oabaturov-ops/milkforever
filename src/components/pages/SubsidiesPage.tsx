@@ -8,9 +8,9 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
-  Landmark, Rocket, Tractor, Baby, Building2, MapPin, ListChecks,
+  Landmark, Rocket, Cog, Baby, Building2, MapPin, ListChecks,
   ChevronDown, ChevronUp, CheckCircle, ArrowRight, Send, Phone,
-  FileText, Users, Calendar, AlertTriangle, Banknote, Clock,
+  FileText, Users, Calendar, AlertTriangle, Banknote, Clock, MessageCircle,
 } from 'lucide-react'
 
 const fadeInUp = {
@@ -447,7 +447,7 @@ export default function SubsidiesPage() {
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-950/40 flex items-center justify-center">
-                        <Tractor className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                        <Cog className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div>
                         <CardTitle className="text-xl">Компенсация за технику и оборудование</CardTitle>
