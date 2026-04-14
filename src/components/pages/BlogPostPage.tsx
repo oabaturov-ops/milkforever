@@ -18,9 +18,9 @@ interface PostData {
   coverImage?: string | null
   views: number
   createdAt: string
-  author?: { id: string; name: string; avatar?: string | null; bio?: string | null } | null
+  author?: { id?: string; name: string; avatar?: string | null; bio?: string | null } | null
   category?: { id: string; name: string; slug: string } | null
-  tags?: { id: string; tag: { id: string; name: string; slug: string } }[]
+  tags?: { id: string; name: string; slug: string }[]
 }
 
 export default function BlogPostPage() {
@@ -228,8 +228,8 @@ export default function BlogPostPage() {
           >
             <Tag className="h-4 w-4 text-muted-foreground mt-0.5" />
             {post.tags.map((t) => (
-              <Badge key={t.tag.id} variant="secondary" className="text-xs">
-                {t.tag.name}
+              <Badge key={t.id} variant="secondary" className="text-xs">
+                {t.name}
               </Badge>
             ))}
           </motion.div>
@@ -260,12 +260,12 @@ export default function BlogPostPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href="https://max.ru/590300963613_bot"
+                  href="https://t.me/MilkForeverServiceBot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold h-11 rounded-lg transition-colors px-6"
+                  className="inline-flex items-center justify-center gap-2 bg-[#229ED9] hover:bg-[#1D8AC1] text-white font-semibold h-11 rounded-lg transition-colors px-6"
                 >
-                  Написать в Max
+                  Написать в Telegram
                 </a>
                 <a
                   href="tel:+79026489672"

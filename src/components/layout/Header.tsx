@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useTheme } from './ThemeProvider'
 import { useNavigation } from '@/lib/navigation'
-import { Moon, Sun, Menu, X, Phone, ChevronDown } from 'lucide-react'
+import { Moon, Sun, Menu, X, Phone, ChevronDown, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -86,8 +86,19 @@ export default function Header() {
               8-902-648-96-72
             </a>
 
+            {/* Кнопка Telegram */}
+            <a
+              href="https://t.me/MilkForeverServiceBot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-[#229ED9] transition-colors"
+            >
+              <Send className="h-4 w-4" />
+              Telegram
+            </a>
+
             {/* Переключатель темы */}
-            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Переключить тему">
+            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Переключить тема">
               {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
 
@@ -122,6 +133,16 @@ export default function Header() {
                 >
                   <Phone className="h-5 w-5" />
                   8-902-648-96-72
+                </a>
+
+                <a
+                  href="https://t.me/MilkForeverServiceBot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 py-3 px-3 text-base font-semibold text-[#229ED9] hover:bg-accent rounded-lg transition-colors"
+                >
+                  <Send className="h-5 w-5" />
+                  Telegram
                 </a>
 
                 <div className="h-px bg-border my-1" />

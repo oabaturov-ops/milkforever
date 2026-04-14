@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 import {
-  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, MessageCircle, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3,
+  Phone, Mail, MapPin, Clock, Send, CheckCircle, Loader2, Calculator, TrendingUp, Banknote, ArrowRight, ShieldCheck, PenTool, Hammer, Settings, Wrench, Coins, ClipboardList, Home, Grid3X3,
 } from 'lucide-react'
 import { useNavigation } from '@/lib/navigation'
 
@@ -142,6 +142,8 @@ function FloatingContactButton() {
 
   if (!visible) return null
 
+  const tgUrl = 'https://t.me/MilkForeverServiceBot'
+  const phoneUrl = 'tel:+79026489672'
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {/* Подсказка */}
@@ -162,20 +164,20 @@ function FloatingContactButton() {
       {/* Кнопки */}
       <div className="flex flex-col gap-3 items-center">
         <a
-          href="tel:+79026489672"
+          href={phoneUrl}
           className="w-14 h-14 rounded-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
           aria-label="Позвонить"
         >
           <Phone className="h-6 w-6" />
         </a>
         <a
-          href="https://max.ru/590300963613_bot"
+          href={tgUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-110 ring-4 ring-white/20"
-          aria-label="Написать в Max"
+          className="w-16 h-16 rounded-full bg-[#229ED9] hover:bg-[#1D8AC1] text-white flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-110 ring-4 ring-[#229ED9]/20"
+          aria-label="Написать в Telegram"
         >
-          <MessageCircle className="h-7 w-7" />
+          <Send className="h-7 w-7" />
         </a>
       </div>
     </div>
@@ -571,6 +573,7 @@ function CalculatorSection() {
   const tgMessage = encodeURIComponent(
     `Здравствуйте! Хочу узнать точный расчёт:\n- Коров: ${cows} голов\n- Содержание: ${housingType === 'tied' ? 'привязное' : 'боксовое'}\n- Примерная стоимость: ${formatMoney(totalCost)} руб.`
   )
+  const tgCalcUrl = `https://t.me/MilkForeverServiceBot?text=${tgMessage}`
 
   return (
     <section id="calculator" className="py-20 bg-muted/30">
@@ -728,12 +731,12 @@ function CalculatorSection() {
                 {/* CTA */}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
-                    href="https://max.ru/590300963613_bot"
+                    href={tgCalcUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 bg-white text-green-800 hover:bg-green-50 font-semibold h-12 rounded-lg transition-colors px-6"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <Send className="h-5 w-5" />
                     Получить точный расчёт
                   </a>
                   <a

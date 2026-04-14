@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
@@ -109,14 +109,24 @@ export default function Footer() {
 
           {/* Социальные сети и подписка */}
           <div className="space-y-4">
-            <h3 className="font-semibold">Мы в соцсетях</h3>
+            <h3 className="font-semibold">Связаться с нами</h3>
+            <a
+              href="https://t.me/MilkForeverServiceBot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-[#229ED9] hover:underline font-medium"
+            >
+              <Send className="h-4 w-4" />
+              @MilkForeverServiceBot
+            </a>
             <a
               href="https://max.ru/590300963613_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
             >
-              ✈️ Max
+              <MessageCircle className="h-4 w-4" />
+              Max
             </a>
 
             <h3 className="font-semibold pt-2">Подписка на новости</h3>

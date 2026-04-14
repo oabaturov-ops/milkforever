@@ -27,7 +27,7 @@ interface Post {
   views: number
   createdAt: string
   category?: { id: string; name: string; slug: string } | null
-  tags?: { id: string; tag: { id: string; name: string; slug: string } }[]
+  tags?: { id: string; name: string; slug: string }[]
 }
 
 const fadeInUp = {

@@ -1,0 +1,17 @@
+{
+  "name": "Ферма Под Ключ",
+  "short_name": "Ферма",
+  "description": "Строительство молочных ферм под ключ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#15803d",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

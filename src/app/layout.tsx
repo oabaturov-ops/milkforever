@@ -13,37 +13,69 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ферма Под Ключ | Строительство молочных ферм под ключ",
+  title: {
+    default: "Ферма Под Ключ | Строительство молочных ферм под ключ",
+    template: "%s | Ферма Под Ключ",
+  },
   description:
-    "Проектирование, строительство и сопровождение молочных ферм. Подбор оборудования, помощь с субсидиями. Пермь и регионы.",
+    "Проектирование, строительство и сопровождение молочных ферм. Подбор оборудования, помощь с субсидиями. Пермь и регионы. 15+ лет опыта, 2000+ коров размещено.",
   keywords: [
     "ферма под ключ",
     "молочная ферма",
     "строительство ферм",
-    "проектирование ферм",
+    "проектирование молочных ферм",
     "оборудование для ферм",
+    "доильный зал",
+    "кормосмеситель",
     "субсидии на ферму",
+    "грант на строительство фермы",
+    "молочное животноводство",
+    "корова",
+    "надой",
     "Пермь",
     "Пермский край",
+    "Урал",
   ],
-  authors: [{ name: "Ферма Под Ключ" }],
-  icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+  authors: [{ name: "Ферма Под Ключ", url: "https://milkforever.ru" }],
+  creator: "Ферма Под Ключ",
+  publisher: "Ферма Под Ключ",
+  metadataBase: new URL("https://milkforever.ru"),
+  alternates: {
+    canonical: "/",
   },
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.svg",
+  },
+  manifest: "/manifest.json",
   openGraph: {
     title: "Ферма Под Ключ | Строительство молочных ферм под ключ",
     description:
       "Проектирование, строительство и сопровождение молочных ферм. Подбор оборудования, помощь с субсидиями. Пермь и регионы.",
-    url: "https://preview-chat-423acf46-a44b-4a14-b448-69fcb1af8323.space.z.ai/",
+    url: "https://milkforever.ru",
     siteName: "Ферма Под Ключ",
-    type: "website",
     locale: "ru_RU",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ферма Под Ключ | Строительство молочных ферм под ключ",
     description:
       "Проектирование, строительство и сопровождение молочных ферм. Подбор оборудования, помощь с субсидиями.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    yandex: "",
   },
 };
 
@@ -67,6 +99,48 @@ export default function RootLayout({
           </NavigationProvider>
         </ThemeProvider>
         <Toaster />
+
+        {/* JSON-LD структурированные данные */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "Ферма Под Ключ",
+              description: "Проектирование, строительство и сопровождение молочных ферм в Пермском крае и регионах",
+              url: "https://milkforever.ru",
+              telephone: "+79026489672",
+              email: "oba12@yandex.ru",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "ул. Декабристов, 33",
+                addressLocality: "Пермь",
+                addressRegion: "Пермский край",
+                addressCountry: "RU",
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                opens: "09:00",
+                closes: "17:00",
+              },
+              priceRange: "$$$",
+              sameAs: [
+                "https://t.me/MilkForeverServiceBot",
+              ],
+              areaServed: {
+                "@type": "GeoCircle",
+                geoMidpoint: {
+                  "@type": "GeoCoordinates",
+                  latitude: 58.0,
+                  longitude: 56.0,
+                },
+                geoRadius: "200000",
+              },
+            }),
+          }}
+        />
       </body>
     </html>
   );
