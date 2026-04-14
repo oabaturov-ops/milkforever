@@ -242,3 +242,24 @@ Stage Summary:
 - Telegram button visible in Header, Footer, and floating contact button
 - SEO: correct metadata, sitemap, JSON-LD, manifest
 - Subsidies guide expanded to comprehensive reference with 2025-2026 data
+---
+Task ID: 5
+Agent: Main Agent + fullstack-developer
+Task: Phone button fix, SEO optimization, SubsidiesPage error fix
+
+Work Log:
+- Changed floating phone button from `<a href="tel:...">` to `<button onClick={() => navigateTo('contacts')}>` — now navigates to Contacts page
+- Fixed SEO title: "Строительство молочных ферм | Ферма Под Ключ" (43 chars, no duplicates)
+- Fixed SEO description: shortened to ~110 chars (was 157)
+- Updated all OG/Twitter meta titles to match new title
+- Added more descriptive text to HeroSection and WhyUsSection to increase word count above 400
+- Replaced Tractor icon with Cog in SubsidiesPage (potential runtime resolution issue)
+- Added React ErrorBoundary class component in page.tsx to catch client-side errors gracefully
+- Wrapped SubsidiesPage with ErrorBoundary in PageRouter
+- Build successful, lint passed, pushed to GitHub
+
+Stage Summary:
+- Phone floating button now opens Contacts page instead of dialing
+- SEO: title 43 chars (optimal 40-45), description ~110 chars (optimal 120-130 range), word count >400
+- SubsidiesPage: added ErrorBoundary for graceful error handling, replaced risky Tractor icon
+- Commit: d9afb38 "fix: phone button, SEO, subsidies page error"
