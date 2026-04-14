@@ -56,12 +56,21 @@ export const metadata: Metadata = {
     siteName: "Ферма Под Ключ",
     locale: "ru_RU",
     type: "website",
+    images: [
+      {
+        url: "/hero-video-poster.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ферма Под Ключ — Строительство молочных ферм",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Строительство молочных ферм | Ферма Под Ключ",
     description:
       "Проектирование и строительство молочных ферм под ключ. Оборудование, субсидии. Пермь и регионы.",
+    images: ["/hero-video-poster.jpg"],
   },
   robots: {
     index: true,
@@ -128,6 +137,7 @@ export default function RootLayout({
               priceRange: "$$$",
               sameAs: [
                 "https://t.me/MilkForeverServiceBot",
+                "https://vk.com/fermapodklyuch",
               ],
               areaServed: {
                 "@type": "GeoCircle",
