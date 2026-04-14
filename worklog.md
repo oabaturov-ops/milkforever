@@ -221,3 +221,24 @@ Work Log:
 Stage Summary:
 - All 14 blog articles now have local cover images (/blog/*.jpg)
 - Images sized 1344x768 for consistent card display
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Fix articles bug, add Telegram button, fix SEO, expand subsidies guide
+
+Work Log:
+- Identified root cause of article crash: PostData interface expected nested tags {id, tag: {id, name, slug}} but API returns flat {id, name, slug}
+- Fixed BlogPostPage.tsx: updated PostData interface, fixed tag rendering (t.tag.id -> t.id, t.tag.name -> t.name)
+- Fixed BlogListPage.tsx: updated Post interface to match actual API data
+- Added Telegram button (@MilkForeverServiceBot) to Header (desktop + mobile menu), Footer, floating contact button
+- Replaced Max links with Telegram in: calculator CTA, article CTA, floating button
+- Updated SEO: metadataBase to milkforever.ru, correct OG URL, expanded keywords, manifest.json, sitemap.ts, JSON-LD (LocalBusiness), robots.txt with Sitemap, proper icon paths
+- Completely rewrote SubsidiesPage: 11 sections, 8 FAQ items, family farm grant (30M), loans section, detailed step-by-step guide, documents checklist, real cost calculation example, Perm region programs
+- Build successful, pushed to GitHub
+
+Stage Summary:
+- Articles no longer crash on click
+- Telegram button visible in Header, Footer, and floating contact button
+- SEO: correct metadata, sitemap, JSON-LD, manifest
+- Subsidies guide expanded to comprehensive reference with 2025-2026 data
