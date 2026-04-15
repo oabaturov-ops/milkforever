@@ -13,10 +13,17 @@ import Script from "next/script";
  *   NEXT_PUBLIC_YANDEX_METRIKA_ID
  *   NEXT_PUBLIC_VK_RETARGETING_ID
  */
+// Analytics IDs (вшиты напрямую, т.к. .env не деплоится на Vercel)
+const ANALYTICS_IDS = {
+  gtmId: 'GTM-N68VT2F4',
+  metrikaId: '105514735',
+  vkRetargetingId: process.env.NEXT_PUBLIC_VK_RETARGETING_ID || '',
+};
+
 export default function Analytics() {
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const metrikaId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
-  const vkRetargetingId = process.env.NEXT_PUBLIC_VK_RETARGETING_ID;
+  const gtmId = ANALYTICS_IDS.gtmId;
+  const metrikaId = ANALYTICS_IDS.metrikaId;
+  const vkRetargetingId = ANALYTICS_IDS.vkRetargetingId;
 
   return (
     <>

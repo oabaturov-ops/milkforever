@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    yandex: process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "",
+    yandex: "105514735",
   },
 };
 
