@@ -31,10 +31,15 @@ export function getDefaultModules(): ModuleDefinition[] {
       module: 'analytics',
       icon: '📊',
       name: 'Аналитика',
-      description: 'Подключение Google Analytics 4 и Яндекс.Метрики',
+      description: 'Google Tag Manager, Яндекс.Метрика, VK Ретаргетинг — полный набор отслеживания посетителей и конверсий',
       params: [
-        { key: 'ga4Id', label: 'GA4 ID', type: 'string', defaultValue: '' },
-        { key: 'metrikaId', label: 'Метрика ID', type: 'string', defaultValue: '' },
+        { key: 'gtmId', label: 'GTM ID (GTM-XXXXXXX)', type: 'string', defaultValue: '' },
+        { key: 'metrikaId', label: 'Яндекс Метрика ID', type: 'string', defaultValue: '' },
+        { key: 'vkRetargetingId', label: 'VK Ретаргетинг ID', type: 'string', defaultValue: '' },
+        { key: 'ga4Id', label: 'GA4 Measurement ID (G-XXXXXXX)', type: 'string', defaultValue: '' },
+        { key: 'fbPixelId', label: 'Facebook Pixel ID', type: 'string', defaultValue: '' },
+        { key: 'metrikaWebvisor', label: 'Метрика Вебвизор', type: 'boolean', defaultValue: true },
+        { key: 'metrikaClickmap', label: 'Метрика Карта кликов', type: 'boolean', defaultValue: true },
       ],
     },
     {

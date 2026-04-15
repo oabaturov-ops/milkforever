@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -6,6 +7,8 @@ import { NavigationProvider } from "@/lib/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import Analytics from "@/components/Analytics";
+import CookieConsent from "@/components/CookieConsent";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -84,7 +87,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    yandex: "",
+    yandex: process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "",
   },
 };
 
@@ -107,11 +110,27 @@ export default function RootLayout({
           </div>
           </NavigationProvider>
         </ThemeProvider>
+        <Analytics />
+        <CookieConsent />
         <Toaster />
 
+        {/* GTM noscript fallback */}
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
+
         {/* JSON-LD структурированные данные */}
-        <script
+        <Script
+          id="json-ld"
           type="application/ld+json"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
