@@ -7,7 +7,7 @@ export type PageName = 'home' | 'about' | 'services' | 'calculator' | 'blog' | '
 interface NavigationContextType {
   currentPage: PageName
   currentPostSlug: string
-  navigateTo: (page: PageName, slug?: string) => void
+  navigateTo: (page: string, slug?: string) => void
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined)
@@ -16,13 +16,12 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   const [currentPage, setCurrentPage] = useState<PageName>('home')
   const [currentPostSlug, setCurrentPostSlug] = useState('')
 
-  const navigateTo = useCallback((page: PageName, slug?: string) => {
-    setCurrentPage(page)
+  const navigateTo = useCallback((page: string, slug?: string) => {
+    setCurrentPage(page as PageName)
     if (slug) setCurrentPostSlug(slug)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
-  // Scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [currentPage])
