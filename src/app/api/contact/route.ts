@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
@@ -6,18 +6,31 @@ export async function POST(request: NextRequest) {
     const { name, phone, email, message } = body
 
     if (!name || !phone) {
-      return NextResponse.json({ error: 'Заполните обязательные поля (имя и телефон)' }, { status: 400 })
+      return NextResponse.json({ error: "Name and phone are required" }, { status: 400 })
     }
 
-    // На статическом сайте сохраняем в лог (можно подключить email-уведомления)
-    console.log('Новая заявка:', { name, phone, email, message })
+    const token = process.env.TELEGRAM_BOT_TOKEN
+    const chatId = process.env.TELEGRAM_CHAT_ID
 
-    return NextResponse.json({ success: true, message: 'Заявка отправлена' }, { status: 201 })
-  } catch {
-    return NextResponse.json({ error: 'Ошибка отправки заявки' }, { status: 500 })
+    if (!token || !chatId) {
+      console.error("Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID")
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 })
+    }
+
+    const text = "Заявка с agrodir.ru!\n\n" +
+      "Имя: " + name + "\n" +
+      "Телефон: " + phone + (email ? "\nEmail: " + email : "") + "\n" +
+      "Сообщение: " + (message || "нет")
+
+    await fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "HTML" })
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error("Telegram error:", error)
+    return NextResponse.json({ error: "Failed to send message" }, { status: 500 })
   }
-}
-
-export async function GET() {
-  return NextResponse.json([], { status: 200 })
 }

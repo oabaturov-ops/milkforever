@@ -20,7 +20,7 @@ interface PostData {
   createdAt: string
   author?: { id: string; name: string; avatar?: string | null; bio?: string | null } | null
   category?: { id: string; name: string; slug: string } | null
-  tags?: { id: string; tag: { id: string; name: string; slug: string } }[]
+  tags?: { id: string; name: string; slug: string }[]
 }
 
 export default function BlogPostPage() {
