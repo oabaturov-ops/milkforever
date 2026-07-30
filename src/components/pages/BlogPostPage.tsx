@@ -228,8 +228,8 @@ export default function BlogPostPage() {
           >
             <Tag className="h-4 w-4 text-muted-foreground mt-0.5" />
             {post.tags.map((t) => (
-              <Badge key={t.tag.id} variant="secondary" className="text-xs">
-                {t.tag.name}
+              <Badge key={t.id} variant="secondary" className="text-xs">
+                {t.name}
               </Badge>
             ))}
           </motion.div>
