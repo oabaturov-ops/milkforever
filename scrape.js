@@ -1,0 +1,1 @@
+var axios=require("axios");var cheerio=require("cheerio");axios.get("https://www.rusprofile.ru/",{headers:{"User-Agent":"Mozilla/5.0"}}).then(function(r){var ch=cheerio.load(r.data);ch("form").each(function(i,f){console.log(i,ch(f).attr("action"),ch(f).attr("method"));ch(f).find("input").each(function(j,inp){console.log(ch(inp).attr("name"),ch(inp).attr("type"))})})})
