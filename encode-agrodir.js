@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 
 const inputFile = path.join(__dirname, 'input.txt');
@@ -8,14 +8,13 @@ const raw = fs.readFileSync(inputFile, 'utf-8');
 const lines = raw.split('\n').map(l => l.trimEnd());
 
 function getField(name, lines) {
+  const fieldNames = ['Название', 'Slug', 'Категория', 'Теги', 'Выдержка', 'Текст'];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].startsWith(name + ':')) {
       const value = lines[i].slice(name.length + 1).trim();
       const content = [];
       for (let j = i + 1; j < lines.length; j++) {
-        if (lines[j].includes(':') && !lines[j].startsWith('#') && !lines[j].startsWith('-') && !lines[j].startsWith('>') && j > i + 1) {
-          if (/^[А-ЯЁA-Z]/.test(lines[j]) && lines[j].length < 80 && !lines[j].includes('http')) break;
-        }
+        if (fieldNames.some(fn => lines[j].startsWith(fn + ':'))) break;
         content.push(lines[j]);
       }
       return value ? value + '\n' + content.join('\n').trim() : content.join('\n').trim();
@@ -25,11 +24,7 @@ function getField(name, lines) {
 }
 
 function slugify(text) {
-  return text.toLowerCase()
-    .replace(/[^a-zа-яё0-9\s-]/gi, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
+  return text.toLowerCase().replace(/[^a-zа-яё0-9\s-]/gi, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
 }
 
 const title = getField('Название', lines).split('\n')[0].trim();
@@ -46,7 +41,7 @@ const tags = tagsStr ? tagsStr.split(',').map(t => {
 const catSlug = slugify(categoryName);
 const catId = 'cat-' + catSlug;
 
-const data = JSON.parse(fs.readFileSync(dataFile, 'utf-8'));
+const data = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
 const posts = data.posts || [];
 
 const maxNum = posts.reduce((max, p) => {
@@ -74,7 +69,7 @@ const newPost = {
 
 posts.push(newPost);
 data.posts = posts;
-fs.writeFileSync(dataFile, JSON.stringify(data, null, 2), 'utf-8');
+fs.writeFileSync(dataFile, JSON.stringify(data, null, 2), 'utf8');
 
 console.log('OK: added ' + newId + ' - ' + title);
 console.log('Slug: ' + slug);
