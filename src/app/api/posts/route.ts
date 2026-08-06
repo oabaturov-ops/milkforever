@@ -1,19 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getPostsByPage } from '@/lib/blog-data'
+﻿import { NextRequest, NextResponse } from 'next/server'
+import { getPostsByPage, getAllCategories } from '@/lib/blog-data'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '6')
-    const categorySlug = searchParams.get('categoryId')
+    const categoryId = searchParams.get('categoryId')
     const tagSlug = searchParams.get('tag')
     const search = searchParams.get('search')
+
+    let categorySlug: string | undefined
+    if (categoryId && categoryId !== 'all') {
+      const cat = getAllCategories().find(c => c.id === categoryId)
+      categorySlug = cat?.slug
+    }
 
     const { posts, total, totalPages } = getPostsByPage({
       page,
       perPage: limit,
-      categorySlug: categorySlug || undefined,
+      categorySlug,
       tagSlug: tagSlug || undefined,
       search: search || undefined,
     })
@@ -28,11 +34,10 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch {
-    return NextResponse.json({ error: 'Ошибка загрузки статей' }, { status: 500 })
+    return NextResponse.json({ error: 'шибка загрузки статей' }, { status: 500 })
   }
 }
 
 export async function POST(request: NextRequest) {
-  // Статический сайт — создание статей через JSON-файл
-  return NextResponse.json({ error: 'Создание статей недоступно на данной версии' }, { status: 501 })
+  return NextResponse.json({ error: 'Создание статей недоступно' }, { status: 501 })
 }
